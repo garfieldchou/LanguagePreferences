@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +22,17 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(MainActivity.this, "Select " + language + " !", Toast.LENGTH_SHORT).show();
         langTextView.setText(language);
         sharedPreferences.edit().putString("language selection", language).apply();
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater menuInflater = this.getMenuInflater();
+
+        menuInflater.inflate(R.menu.main_menu, menu);
+
+        return true;
 
     }
 
