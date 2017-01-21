@@ -11,14 +11,26 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    SharedPreferences sharedPreferences;
+
+    TextView langTextView;
+
+    public void updatePreferences (String language) {
+
+        Toast.makeText(MainActivity.this, "Select " + language + " !", Toast.LENGTH_SHORT).show();
+        langTextView.setText(language);
+        sharedPreferences.edit().putString("language selection", language).apply();
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final TextView langTextView = (TextView) findViewById(R.id.langTextView);
+        langTextView = (TextView) findViewById(R.id.langTextView);
 
-        final SharedPreferences sharedPreferences = getSharedPreferences("com.garfieldchou.languagepreferences", Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("com.garfieldchou.languagepreferences", Context.MODE_PRIVATE);
 
         langTextView.setText(sharedPreferences.getString("language selection", "Hello New World!"));
 
@@ -30,17 +42,13 @@ public class MainActivity extends AppCompatActivity {
                     .setPositiveButton("English", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(MainActivity.this, "Select English!", Toast.LENGTH_SHORT).show();
-                            langTextView.setText("English");
-                            sharedPreferences.edit().putString("language selection", "English").apply();
+                            updatePreferences("English");
                         }
                     })
                     .setNegativeButton("SPANISH", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(MainActivity.this, "Select SPANISH!", Toast.LENGTH_SHORT).show();
-                            langTextView.setText("Spanish");
-                            sharedPreferences.edit().putString("language selection", "Spanish").apply();
+                            updatePreferences("Spanish");
                         }
                     }).show();
         }
